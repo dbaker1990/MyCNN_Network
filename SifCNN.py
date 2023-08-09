@@ -21,7 +21,7 @@ def ConvertNoImpairmentIntoRGB():
         print(os.path.exists('./train/Mild Impairment/' + x))
         grayImage = cv2.imread('./train/Mild Impairment/%s' %x)
         gray = cv2.cvtColor(grayImage,cv2.COLOR_BGR2GRAY)
-        gray_three = cv2.merge(gray,gray)
+        gray_three = cv2.merge(gray,gray,gray)
         cv2.imwrite(x,gray_three)
         
 
