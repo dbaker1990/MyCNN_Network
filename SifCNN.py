@@ -10,10 +10,24 @@ import numpy as np
 import cv2 
 import matplotlib.pyplot as plt
 import time
+from PIL import Image
+import os, os.path
+
+fileList = os.listdir("./train/Mild Impairment")
+def ConvertNoImpairmentIntoRGB():
+    for x in os.listdir("./train/Mild Impairment"):
+        print("file is:" + x)
+        os.chdir("./train/Mild Impairment/")
+        print(os.path.exists('./train/Mild Impairment/' + x))
+        grayImage = cv2.imread('./train/Mild Impairment/%s' %x)
+        gray = cv2.cvtColor(grayImage,cv2.COLOR_BGR2GRAY)
+        gray_three = cv2.merge(gray,gray)
+        cv2.imwrite(x,gray_three)
+        
 
 #Check to see if cuda is available if so show the name of the gpu
 haveCuda  = torch.cuda.is_available()
-print(torch.cuda.get_device_name(0))
+#print(torch.cuda.get_device_name(0))
 
 batch_size = 32
 n_epochs = 10
@@ -26,3 +40,5 @@ labels = []
 for x in data.classes:
     labels.append(x)
 print(labels)
+
+ConvertNoImpairmentIntoRGB()
