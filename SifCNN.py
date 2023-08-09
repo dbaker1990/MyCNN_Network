@@ -20,4 +20,7 @@ learning_rate = 0.001
 
 #Set the training folder and set labels for each folder
 data = ImageFolder(root="./train")
-print(data.class_to_idx)
+labels = []
+for x in data.classes:
+    labels.append(x)
+print(labels)
