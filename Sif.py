@@ -9,6 +9,7 @@ import torch.nn.functional as F
 import cv2 
 import matplotlib.pyplot as plt
 import time
+import ImageResize
 
 #Check to see if cuda is available if so show the name of the gpu
 haveCuda  = torch.cuda.is_available()
@@ -24,3 +25,6 @@ data = ImageFolder(root='./train')
 labels = []
 for x in data.classes:
     labels.append(x)
+    
+#This is function I created it resize images to the nearest cubic
+#ImageResize.ResizeImage(640,480,"imagePath")
