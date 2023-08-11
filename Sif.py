@@ -125,6 +125,7 @@ class Sif(nn.Module):
     
 
 model = Sif(num_classes)
+model.cuda()
 
 #set loss function with criterion
 criterion = nn.CrossEntropyLoss()
