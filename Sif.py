@@ -18,7 +18,7 @@ print(torch.cuda.get_device_name(0))
 
 batch_size = 32
 n_epochs = 10
-learning_rate = 0.001
+learning_rate = 0.0015
 shuffleImages = True
 num_classes = 4
 
@@ -29,7 +29,7 @@ itransform = transforms.Compose([
     transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))
 ])
 #Set the training folder and set labels for each folder
-trainset = ImageFolder(root='./train',transform=itransform)
+trainset = ImageFolder(root='./rgbtrain',transform=itransform)
 labels = []
 for x in trainset.classes:
     labels.append(x)
@@ -122,5 +122,34 @@ class Sif(nn.Module):
         out = self.relu2(out)
         
         return out
+    
+
+model = Sif(num_classes)
+
+#set loss function with criterion
+criterion = nn.CrossEntropyLoss()
+
+#Set optimizer with optimizer
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, weight_decay=0.005, momentum=0.9)
+
+total_step = len(train_loader)
+
+#Use the predefined number of epochs to determine how many iterations to train the network on
+for epoch in range(n_epochs):
+    #load in the data in batches using the train_loader object
+    for i, (images,labels) in enumerate(train_loader):
+        # move tensors to the configured device
+        images, labels = images.to(device), labels.to(device)
+        
+        #forward pass
+        outputs = model(images)
+        loss = criterion(outputs, labels)
+        
+        #Backward and optimize
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        
+        print('Epoch [{}/{}], Loss: {:.4f}'.format(epoch+1, n_epochs, loss.item()))
         
         
