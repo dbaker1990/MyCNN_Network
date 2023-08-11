@@ -125,6 +125,7 @@ class Sif(nn.Module):
     
 
 model = Sif(num_classes)
+#add model to GPU
 model.cuda()
 
 #set loss function with criterion
